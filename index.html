@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Ezekiel Kamau – Web Developer & Creative Coder from Kenya" />
+  <title>Ezekiel Kamau | Portfolio</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --bg-light: #f8fafc;
+      --text-light: #1e293b;
+      --card-light: #ffffff;
+      --border-light: #e2e8f0;
+      --shadow-light: rgba(0,0,0,0.05);
+      --bg-dark: #0f172a;
+      --text-dark: #f1f5f9;
+      --card-dark: #1e293b;
+      --border-dark: #334155;
+      --shadow-dark: rgba(0,0,0,0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body.light-mode {
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: 0.4s;
+    }
+
+    body.dark-mode {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      transition: 0.4s;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* THEME BUTTON */
+    #theme-toggle {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--card-light);
+      border: 1px solid var(--border-light);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: 0.3s ease;
+    }
+
+    body.dark-mode #theme-toggle {
+      background: var(--card-dark);
+      border-color: var(--border-dark);
+      color: var(--text-dark);
+    }
+
+    /* NAVIGATION */
+    nav {
+      padding: 1.5rem 2rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 90;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    body.dark-mode nav {
+      background: rgba(15,23,42,0.85);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      color: inherit;
+      transition: 0.3s;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, #eef2ff, #f0f9ff);
+      padding: 6rem 2rem 2rem;
+    }
+
+    body.dark-mode .hero {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+    }
+
+    .hero-content h1 { font-size: 3rem; margin-bottom: 1rem; }
+    #typewriter { font-size: 1.7rem; min-height: 30px; margin-bottom: 1rem; }
+    .hero p { max-width: 600px; margin: auto; margin-bottom: 1.5rem; font-size: 1.1rem; }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.8rem 1.8rem;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn.primary { background: var(--primary); color: white; }
+    .btn.primary:hover { background: var(--primary-dark); }
+
+    .btn.outline {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    body.dark-mode .btn.outline {
+      border-color: var(--text-dark);
+      color: var(--text-dark);
+    }
+
+    /* SECTIONS */
+    section { padding: 6rem 0; }
+    .section-title { text-align: center; font-size: 2.3rem; margin-bottom: 3rem; }
+
+    /* ABOUT */
+    .about-content {
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .skill-item h3 { text-align: center; margin-bottom: 0.8rem; }
+
+    .progress-bar {
+      height: 10px;
+      background: var(--border-light);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    body.dark-mode .progress-bar {
+      background: var(--border-dark);
+    }
+
+    .progress {
+      height: 100%;
+      background: var(--primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: 1s ease;
+    }
+
+    /* PROJECTS */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card-light);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px var(--shadow-light);
+      transition: 0.3s;
+    }
+
+    .card:hover { transform: translateY(-8px); }
+
+    body.dark-mode .card {
+      background: var(--card-dark);
+      box-shadow: 0 4px 20px var(--shadow-dark);
+    }
+
+    .card-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    body.dark-mode .card-links a { color: var(--text-dark); }
+
+    /* CONTACT */
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .socials a { color: inherit; transition: 0.3s; }
+    .socials a:hover { color: var(--primary); }
+
+    /* FOOTER */
+    footer {
+      background: #0f172a;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 { font-size: 2.3rem; }
+      #typewriter { font-size: 1.4rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body class="light-mode">
+
+  <!-- Theme Toggle -->
+  <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">Ezekiel Kamau</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero" class="hero">
+    <div class="hero-content">
+      <h1>Hi, I'm <span class="highlight">Ezekiel Kamau</span></h1>
+      <h2 id="typewriter"></h2>
+      <p>A web developer from Kenya building fast, animated, and responsive digital experiences.</p>
+
+      <div class="hero-btns">
+        <a href="#projects" class="btn primary">View My Work</a>
+        <a href="#contact" class="btn outline">Get In Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-content">
+        <p>
+          I'm a creative coder focused on modern, clean, and animated web interfaces. I build fast,
+          accessible projects using HTML, CSS, and JavaScript. When not coding, I explore new tech
+          and engage with developers globally.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">My Skills</h2>
+
+      <div class="skills-grid">
+        <div class="skill-item">
+          <h3>HTML & CSS</h3>
+          <div class="progress-bar"><div class="progress" data-width="90"></div></div>
+        </div>
+
+        <div class="skill-item">
+          <h3>JavaScript</h3>
+          <div class="progress-bar"><div class="progress" data-width="85"></div></div>
+        </div>
+
+        <div class="skill-item">
+          <h3>Responsive Design</h3>
+          <div class="progress-bar"><div class="progress" data-width="88"></div></div>
+        </div>
+
+        <div class="skill-item">
+          <h3>Git & GitHub</h3>
+          <div class="progress-bar"><div class="progress" data-width="80"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">Featured Projects</h2>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Movie Streaming Guide</h3>
+          <p>Movie availability web app powered by TMDb showing legal streaming sources.</p>
+          <div class="card-links">
+            <a href="https://github.com/kamauezekiel53-maker" target="_blank">
+              <i class="fab fa-github"></i> Code
+            </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Animated Portfolio</h3>
+          <p>This website—built with HTML, CSS, and JavaScript with theme switching.</p>
+          <div class="card-links">
+            <a href="https://github.com/kamauezekiel53-maker" target="_blank">
+              <i class="fab fa-github"></i> Code
+            </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Weather Dashboard</h3>
+          <p>Real-time weather system with smart UI transitions and location search.</p>
+          <div class="card-links">
+            <a href="https://github.com/kamauezekiel53-maker" target="_blank">
+              <i class="fab fa-github"></i> Code
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact Me</h2>
+      <div class="socials">
+        <a href="https://github.com/kamauezekiel53-maker" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.instagram.com/_ph_antom_knight/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="mailto:Kamauezekiel53@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="https://wa.me/254752578163" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Ezekiel Kamau. Built with passion from Kenya.</p>
+  </footer>
+
+  <script>
+    // Typewriter
+    const tw = document.getElementById("typewriter");
+    const twText = "a web developer.";
+    let i = 0;
+
+    const typeInterval = setInterval(() => {
+      tw.textContent += twText.charAt(i);
+      i++;
+      if (i === twText.length) clearInterval(typeInterval);
+    }, 100);
+
+    // Theme Toggle
+    const toggle = document.getElementById("theme-toggle");
+    const body = document.body;
+    const icon = toggle.querySelector("i");
+
+    const storedTheme = localStorage.getItem("theme") || "light";
+    if (storedTheme === "dark") {
+      body.classList.add("dark-mode");
+      icon.classList.replace("fa-moon", "fa-sun");
+    }
+
+    toggle.onclick = () => {
+      body.classList.toggle("dark-mode");
+      const dark = body.classList.contains("dark-mode");
+      icon.classList.toggle("fa-sun");
+      icon.classList.toggle("fa-moon");
+      localStorage.setItem("theme", dark ? "dark" : "light");
+    };
+
+    // Skills Animation
+    const skills = document.querySelectorAll(".progress");
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const bar = entry.target;
+            const width = bar.getAttribute("data-width");
+            bar.style.transform = "scaleX(" + width / 100 + ")";
+            obs.unobserve(bar);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    skills.forEach((bar) => obs.observe(bar));
+
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute("href"));
+        if (!target) return;
+        window.scrollTo({ top: target.offsetTop - 70, behavior: "smooth" });
+      });
+    });
+  </script>
+</body>
+  </html>
