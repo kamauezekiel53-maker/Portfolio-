@@ -1,403 +1,448 @@
 <!doctype html>
-
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="Ezekiel Kamau – Web Developer & Creative Coder from Kenya" />
-  <title>Ezekiel Kamau — Portfolio</title>  <!-- Fonts & Icons -->  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">  <!-- GSAP + ScrollTrigger + Locomotive Scroll (CDN) -->  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.2.2/dist/locomotive-scroll.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.2.2/dist/locomotive-scroll.min.js" defer></script>  <style>
+  <title>Ezekiel Kamau — Portfolio</title>
+
+  <!-- Google Font + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+
+  <style>
     :root{
-      --primary:#6366f1;
-      --primary-dark:#4f46e5;
-      --bg:#0f172a;
-      --muted:#94a3b8;
-      --card:#0b1220;
+      --bg-1: #0b1020;         /* deep navy */
+      --bg-2: #081328;         /* deeper shade */
       --glass: rgba(255,255,255,0.06);
-      --white:#f8fafc;
-      --radius:14px;
+      --muted: rgba(255,255,255,0.72);
+      --accent-a: #7c3aed;     /* purple */
+      --accent-b: #06b6d4;     /* teal/cyan */
+      --card-radius: 14px;
+      --max-width: 1100px;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%;}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      background:linear-gradient(180deg,#071129 0%, #07112a 100%);
-      color:var(--white);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+      color: #f8fafc;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      overflow:hidden;
+      -webkit-text-size-adjust:100%;
+      line-height:1.5;
     }
 
-    /* ---- page wrapper used by locomotive-scroll ---- */
-    #js-scroll{position:relative}
+    a{color:inherit}
+    img{max-width:100%;height:auto;display:block}
 
     /* NAV */
-    nav{
-      position:fixed;left:0;right:0;top:16px;z-index:1200;pointer-events:auto;
-      display:flex;align-items:center;justify-content:center;
+    header {
+      position:fixed;
+      top:0;left:0;right:0;
+      z-index:1200;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(10,12,20,0.55), rgba(6,8,12,0.35));
+      border-bottom: 1px solid rgba(255,255,255,0.03);
     }
 
-    .nav-inner{width:min(1200px,92%);display:flex;justify-content:space-between;align-items:center}
-    .logo{font-weight:800;color:var(--primary);font-size:1.05rem;text-decoration:none}
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 12px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
 
-    .nav-links{display:flex;gap:18px;align-items:center}
-    .nav-links a{color:var(--white);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600;opacity:0.9}
-    .nav-links a:hover{background:rgba(255,255,255,0.03)}
+    .brand { display:flex; align-items:center; gap:12px; text-decoration:none; }
+    .logo {
+      font-weight:800;
+      color:var(--accent-a);
+      font-size:1.05rem;
+      line-height:1;
+      text-decoration:none;
+    }
+    .nav-links {
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+    .nav-links a {
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:600;
+      padding:8px 10px;
+      border-radius:10px;
+    }
+    .nav-links a:hover { color:#fff; background: rgba(255,255,255,0.02); }
 
-    /* theme toggle */
-    #theme-toggle{width:44px;height:44px;border-radius:999px;border:1px solid rgba(255,255,255,0.06);display:inline-flex;align-items:center;justify-content:center;background:transparent;color:var(--white);cursor:pointer}
+    /* hamburger for mobile */
+    .hamburger {
+      display:none;
+      width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);
+      background:transparent;color:var(--muted);
+      align-items:center;justify-content:center;cursor:pointer;
+    }
+
+    /* layout container: push content below nav */
+    main { padding-top:76px; }
 
     /* HERO */
-    .hero{min-height:100vh;display:grid;place-items:center;padding:120px 20px 80px}
-    .hero-inner{width:min(1100px,94%);display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center}
-
-    .hero-left h1{font-size:clamp(26px,5vw,48px);line-height:1.02;margin:0 0 12px}
-    .hero-left h2{color:var(--muted);margin:0 0 18px;font-weight:500}
-    .hero-left p{max-width:56ch;color:rgba(248,250,252,0.85)}
-
-    .cta-row{display:flex;gap:12px;margin-top:22px}
-    .btn{padding:12px 18px;border-radius:999px;font-weight:700;border:0;cursor:pointer}
-    .btn-primary{background:linear-gradient(90deg,var(--primary),var(--primary-dark));color:white;box-shadow:0 10px 30px rgba(99,102,241,0.18)}
-    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--white)}
-
-    /* hero card */
-    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:24px;border-radius:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 40px rgba(2,6,23,0.6)}
-    .avatar{height:92px;width:92px;border-radius:12px;background:linear-gradient(135deg,#0b1220,#081827);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;color:var(--primary)}
-    .hero-stats{display:flex;gap:12px;margin-top:14px}
-    .stat{flex:1;background:rgba(255,255,255,0.02);padding:10px;border-radius:12px;text-align:center}
-    .stat h4{margin:0;font-size:14px}
-    .stat p{margin:6px 0 0;color:var(--muted);font-size:13px}
-
-    /* sections */
-    section{padding:120px 0}
-    .container{width:min(1100px,94%);margin:0 auto}
-    .section-title{font-size:24px;margin-bottom:18px}
-
-    /* skills */
-    .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-    .skill{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-    .skill h3{margin:0 0 10px}
-    .progress-wrap{background:rgba(255,255,255,0.03);height:10px;border-radius:999px;overflow:hidden}
-    .progress{height:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,var(--primary),var(--primary-dark));transition:transform 1.1s cubic-bezier(.2,.9,.2,1)}
-
-    /* projects */
-    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;transform:translateY(0);will-change:transform}
-    .card h3{margin:0 0 8px}
-    .card p{margin:0;color:var(--muted);font-size:14px}
-
-    /* contact */
-    .socials{display:flex;gap:14px}
-    .socials a{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:10px;background:rgba(255,255,255,0.02);text-decoration:none;color:var(--white);font-size:18px}
-
-    /* footer */
-    footer{padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
-
-    /* responsive */
-    @media (max-width:900px){
-      .hero-inner{grid-template-columns:1fr;}
-      .skills-grid{grid-template-columns:1fr}
+    .hero {
+      min-height: calc(100vh - 76px);
+      display:flex;
+      align-items:center;
+      padding:48px 18px;
     }
 
-    /* animations utility classes used for GSAP entry sequencing */
-    .will-fade{opacity:0;transform:translateY(10px)}
-    .will-slide-left{opacity:0;transform:translateX(-18px)}
-    .will-slide-right{opacity:0;transform:translateX(18px)}
+    .hero-inner{
+      max-width: var(--max-width);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 1fr 380px;
+      gap:28px;
+      align-items:center;
+    }
 
-  </style></head>
-<body>  <nav aria-label="Primary navigation">
+    .hero-title { font-size:clamp(26px,6vw,44px); margin:0 0 8px; line-height:1.02 }
+    .hero-sub { color:var(--muted); margin:0 0 16px; font-weight:500 }
+    .hero-cta { display:flex; gap:12px; flex-wrap:wrap }
+
+    .btn {
+      padding:10px 16px;
+      border-radius:999px;
+      font-weight:700;
+      cursor:pointer;
+      border:0;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+      color:white; box-shadow: 0 10px 30px rgba(124,58,237,0.14);
+    }
+    .btn-outline {
+      background: transparent; border:1px solid rgba(255,255,255,0.06); color:var(--muted)
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--card-radius);
+      padding:18px;
+      border: 1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 8px 30px rgba(2,6,23,0.55);
+    }
+
+    .profile {
+      display:flex;gap:14px;align-items:center;
+    }
+    .avatar {
+      width:88px;height:88px;border-radius:12px;display:grid;place-items:center;
+      background: linear-gradient(135deg, rgba(124,58,237,0.14), rgba(6,182,212,0.06));
+      font-weight:800;color:var(--accent-a);font-size:20px;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .stats { display:flex; gap:10px; margin-top:14px; }
+    .stat { flex:1; background: rgba(255,255,255,0.02); padding:10px; border-radius:10px; text-align:center }
+
+    /* SECTIONS */
+    section { padding:72px 18px; }
+    .container { max-width: var(--max-width); margin:0 auto; }
+
+    .section-title { font-size:20px; margin:0 0 18px; font-weight:700; color: #fff; }
+
+    /* Skills grid */
+    .skills-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:14px; }
+    .skill { padding:14px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); }
+    .progress-wrap { background: rgba(255,255,255,0.03); height:10px; border-radius:999px; overflow:hidden; margin-top:8px; }
+    .progress { height:100%; width:0%; background: linear-gradient(90deg, var(--accent-a), var(--accent-b)); transform-origin:left; }
+
+    /* Projects */
+    .cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:14px; }
+    .project { padding:14px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)); border:1px solid rgba(255,255,255,0.03); }
+
+    /* Contact */
+    .socials { display:flex; gap:10px; margin-top:12px; }
+    .socials a { display:inline-grid; place-items:center; width:44px; height:44px; border-radius:10px; background: rgba(255,255,255,0.02); color:var(--muted); text-decoration:none; }
+
+    footer { padding:28px 18px; text-align:center; color:var(--muted); font-size:13px; }
+
+    /* small screens */
+    @media (max-width:880px) {
+      .hero-inner { grid-template-columns: 1fr; gap:20px; }
+      .nav-links { display:none; }
+      .hamburger { display:inline-flex; }
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+
+    /* show mobile menu when active */
+    .nav-open .nav-links {
+      position:fixed;
+      left:12px; right:12px; top:64px;
+      background: linear-gradient(180deg, rgba(6,7,12,0.96), rgba(6,7,12,0.98));
+      display:flex; flex-direction:column; gap:10px; padding:12px; border-radius:12px;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* small visual helpers for animation start */
+    .reveal { opacity:0; transform: translateY(10px); }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Nav -->
+  <header id="site-header">
     <div class="nav-inner">
-      <a class="logo" href="#home">Ezekiel Kamau</a>
-      <div style="display:flex;align-items:center;gap:12px">
-        <div class="nav-links" role="navigation" aria-label="Sections">
-          <a href="#home" data-link>Home</a>
-          <a href="#about" data-link>About</a>
-          <a href="#skills" data-link>Skills</a>
-          <a href="#projects" data-link>Projects</a>
-          <a href="#contact" data-link>Contact</a>
-        </div>
-        <button id="theme-toggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
-      </div>
-    </div>
-  </nav>  <!-- main scroll container for locomotive -->  <main id="js-scroll" data-scroll-container><!-- HERO -->
-<section id="home" class="hero" data-scroll-section>
-  <div class="hero-inner container">
-    <div class="hero-left will-slide-left" data-scroll data-scroll-speed="0.6">
-      <h1>Hi, I'm <strong style="color:var(--primary)">Ezekiel Kamau</strong></h1>
-      <h2 id="typewriter" style="margin-top:6px">a web developer</h2>
-      <p>I build fast, animated and accessible web interfaces — focused on performance and delightful micro-interactions.</p>
+      <a class="brand" href="#home" aria-label="Home">
+        <div class="logo">Ezekiel Kamau</div>
+      </a>
 
-      <div class="cta-row" style="margin-top:18px">
-        <button class="btn btn-primary" data-link-to="#projects">View My Work</button>
-        <button class="btn btn-outline" data-link-to="#contact">Get In Touch</button>
-      </div>
-    </div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-    <aside class="hero-card will-fade" data-scroll data-scroll-speed="0.8">
-      <div style="display:flex;gap:12px;align-items:center">
-        <div class="avatar">EK</div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main id="main">
+    <section id="home" class="hero">
+      <div class="hero-inner container">
         <div>
-          <div style="font-weight:700">Ezekiel Kamau</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:4px">Web Developer — Kenya</div>
+          <h1 class="hero-title reveal">Hi, I'm <span style="background:linear-gradient(90deg,var(--accent-a),var(--accent-b)); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:800">Ezekiel Kamau</span></h1>
+          <p id="typewriter" class="hero-sub reveal">a web developer.</p>
+          <p class="reveal" style="color:var(--muted)">I build fast, animated and accessible web interfaces — focused on performance, micro-interactions, and polished UX.</p>
+
+          <div class="hero-cta reveal" style="margin-top:18px;">
+            <button class="btn btn-primary" data-scroll-to="#projects">View My Work</button>
+            <button class="btn btn-outline" data-scroll-to="#contact">Get In Touch</button>
+          </div>
+        </div>
+
+        <aside class="card reveal" aria-hidden="false">
+          <div class="profile">
+            <div class="avatar" aria-hidden="true">EK</div>
+            <div>
+              <div style="font-weight:700">Ezekiel Kamau</div>
+              <div style="font-size:13px;color:var(--muted); margin-top:6px">Web Developer — Kenya</div>
+            </div>
+          </div>
+
+          <div class="stats" style="display:flex; gap:10px; margin-top:14px;">
+            <div class="stat">
+              <div style="font-weight:800">14+</div>
+              <div style="font-size:12px;color:var(--muted)">Projects</div>
+            </div>
+            <div class="stat">
+              <div style="font-weight:800">4+</div>
+              <div style="font-size:12px;color:var(--muted)">Years</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-heading">
+      <div class="container">
+        <h2 id="about-heading" class="section-title reveal">About Me</h2>
+        <div class="reveal" style="max-width:780px; color:var(--muted)">
+          <p>I focus on clean, maintainable front-end systems that are accessible and performant. I prefer small toolchains, pragmatic animations and ship-ready interfaces that delight users without slowing them down.</p>
+          <p style="margin-top:12px">I enjoy exploring new browser APIs, animation systems and collaborating with product designers to produce polished front-end experiences.</p>
         </div>
       </div>
+    </section>
 
-      <div class="hero-stats">
-        <div class="stat">
-          <h4>14+</h4>
-          <p>Projects</p>
+    <section id="skills" aria-labelledby="skills-heading">
+      <div class="container">
+        <h2 id="skills-heading" class="section-title reveal">Skills</h2>
+
+        <div class="skills-grid" style="margin-top:14px;">
+          <div class="skill reveal" data-skill="90">
+            <h4 style="margin:0 0 6px">HTML & CSS</h4>
+            <div class="progress-wrap"><div class="progress"></div></div>
+          </div>
+
+          <div class="skill reveal" data-skill="85">
+            <h4 style="margin:0 0 6px">JavaScript</h4>
+            <div class="progress-wrap"><div class="progress"></div></div>
+          </div>
+
+          <div class="skill reveal" data-skill="88">
+            <h4 style="margin:0 0 6px">Animations & Motion</h4>
+            <div class="progress-wrap"><div class="progress"></div></div>
+          </div>
+
+          <div class="skill reveal" data-skill="80">
+            <h4 style="margin:0 0 6px">Git & Tooling</h4>
+            <div class="progress-wrap"><div class="progress"></div></div>
+          </div>
         </div>
-        <div class="stat">
-          <h4>4+</h4>
-          <p>Years Experience</p>
+      </div>
+    </section>
+
+    <section id="projects" aria-labelledby="projects-heading">
+      <div class="container">
+        <h2 id="projects-heading" class="section-title reveal">Featured Projects</h2>
+
+        <div class="cards" style="margin-top:14px;">
+          <article class="project reveal">
+            <h3 style="margin:0 0 8px">Movie Streaming Guide</h3>
+            <p style="color:var(--muted); margin:0">Web app powered by curated APIs showing legal sources & trailers. (Link & details to be added.)</p>
+          </article>
+
+          <article class="project reveal">
+            <h3 style="margin:0 0 8px">Animated Portfolio</h3>
+            <p style="color:var(--muted); margin:0">This site — built with attention to motion, theme persistence, and accessibility.</p>
+          </article>
+
+          <article class="project reveal">
+            <h3 style="margin:0 0 8px">Weather Dashboard</h3>
+            <p style="color:var(--muted); margin:0">Real-time weather with smooth UI transitions.</p>
+          </article>
         </div>
       </div>
-    </aside>
-  </div>
-</section>
+    </section>
 
-<!-- ABOUT -->
-<section id="about" data-scroll-section>
-  <div class="container">
-    <h3 class="section-title will-fade">About Me</h3>
-    <div class="will-fade" style="max-width:800px;line-height:1.6;color:rgba(248,250,252,0.9)">
-      <p>I focus on clean, maintainable front-end systems that are accessible and performant. I prefer small toolchains, pragmatic animations and shipable interfaces that delight users without slowing them down.</p>
-      <p style="margin-top:12px;color:var(--muted)">I enjoy exploring new browser APIs, animation systems and collaborating with product designers to produce polished front-end experiences.</p>
-    </div>
-  </div>
-</section>
+    <section id="contact" aria-labelledby="contact-heading">
+      <div class="container">
+        <h2 id="contact-heading" class="section-title reveal">Contact</h2>
+        <p class="reveal" style="color:var(--muted)">Reach out for collaborations or freelance work. I typically reply within a business day.</p>
 
-<!-- SKILLS -->
-<section id="skills" data-scroll-section>
-  <div class="container">
-    <h3 class="section-title will-slide-right">Skills</h3>
-    <div class="skills-grid" style="margin-top:18px">
-      <div class="skill will-fade" data-skill="90">
-        <h3>HTML & CSS</h3>
-        <div class="progress-wrap"><div class="progress"></div></div>
+        <div class="socials reveal">
+          <a href="https://github.com/kamauezekiel53-maker" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+          <a href="https://www.instagram.com/_ph_antom_knight/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="mailto:Kamauezekiel53@gmail.com"><i class="fas fa-envelope"></i></a>
+          <a href="https://wa.me/254752578163" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+        </div>
       </div>
-      <div class="skill will-fade" data-skill="85">
-        <h3>JavaScript</h3>
-        <div class="progress-wrap"><div class="progress"></div></div>
-      </div>
-      <div class="skill will-fade" data-skill="88">
-        <h3>Animations & Motion</h3>
-        <div class="progress-wrap"><div class="progress"></div></div>
-      </div>
-      <div class="skill will-fade" data-skill="80">
-        <h3>Git & Tooling</h3>
-        <div class="progress-wrap"><div class="progress"></div></div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- PROJECTS -->
-<section id="projects" data-scroll-section>
-  <div class="container">
-    <h3 class="section-title will-fade">Featured Projects</h3>
-    <div class="cards" style="margin-top:18px">
-      <article class="card will-fade" data-github="https://github.com/kamauezekiel53-maker">
-        <h3>Movie Streaming Guide</h3>
-        <p>Movie availability web app powered by curated APIs showing legal sources & trailers.</p>
-      </article>
+    <footer>
+      <div class="container">© 2025 Ezekiel Kamau — Built with a gradient motion theme.</div>
+    </footer>
+  </main>
 
-      <article class="card will-fade">
-        <h3>Animated Portfolio</h3>
-        <p>This site — built with performance and motion in mind. Theme persistence and scroll micro-interactions.</p>
-      </article>
+  <script>
+    // Small utilities
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
 
-      <article class="card will-fade">
-        <h3>Weather Dashboard</h3>
-        <p>Real-time weather with location search and smooth UI transitions.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" data-scroll-section>
-  <div class="container">
-    <h3 class="section-title will-fade">Contact</h3>
-    <p class="will-fade" style="color:var(--muted)">Reach out for collaborations or freelance work — I typically reply within a business day.</p>
-
-    <div style="margin-top:18px" class="will-fade">
-      <div class="socials">
-        <a href="https://github.com/kamauezekiel53-maker" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a>
-        <a href="https://www.instagram.com/_ph_antom_knight/" target="_blank" rel="noopener"> <i class="fab fa-instagram"></i> </a>
-        <a href="mailto:Kamauezekiel53@gmail.com"> <i class="fas fa-envelope"></i> </a>
-        <a href="https://wa.me/254752578163" target="_blank" rel="noopener"> <i class="fab fa-whatsapp"></i> </a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<footer data-scroll-section>
-  <div class="container" style="padding:28px 0 48px">
-    <div style="opacity:0.7">© 2025 Ezekiel Kamau — Built with attention to motion & performance.</div>
-  </div>
-</footer>
-
-  </main>  <script>
-    // ---------- Utilities ----------
-    const q = (s, el=document) => el.querySelector(s);
-    const qa = (s, el=document) => Array.from(el.querySelectorAll(s));
-
-    // ---------- Theme Toggle & persistence ----------
-    const themeToggle = q('#theme-toggle');
-    const storedTheme = localStorage.getItem('theme') || 'dark';
-    const applyTheme = (t) => {
-      if(t === 'light'){
-        document.documentElement.style.setProperty('--bg','#f8fafc');
-        document.documentElement.style.setProperty('--card','#ffffff');
-        document.documentElement.style.setProperty('--white','#0f172a');
-        document.documentElement.style.setProperty('--muted','#475569');
-        document.body.style.background = 'linear-gradient(180deg,#f8fafc,#eef2ff)';
-        q('#theme-toggle i').classList.replace('fa-sun','fa-moon');
-      } else {
-        // dark (default)
-        document.documentElement.style.setProperty('--bg','#0f172a');
-        document.documentElement.style.setProperty('--card','#0b1220');
-        document.documentElement.style.setProperty('--white','#f8fafc');
-        document.documentElement.style.setProperty('--muted','#94a3b8');
-        document.body.style.background = 'linear-gradient(180deg,#071129,#07112a)';
-        q('#theme-toggle i').classList.replace('fa-moon','fa-sun');
-      }
-      localStorage.setItem('theme', t);
-    }
-
-    // initial
-    if(!q('#theme-toggle i').classList.contains('fa-sun') && storedTheme === 'dark'){
-      q('#theme-toggle i').classList.replace('fa-moon','fa-sun');
-    }
-    applyTheme(storedTheme);
-
-    themeToggle.addEventListener('click', ()=>{
-      const current = localStorage.getItem('theme') || 'dark';
-      const next = current === 'dark' ? 'light' : 'dark';
-      applyTheme(next);
+    // Mobile nav toggle
+    const body = document.body;
+    const hamburger = $('#hamburger');
+    const siteHeader = $('#site-header') || document.getElementById('site-header');
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', !expanded);
+      siteHeader.classList.toggle('nav-open');
     });
 
-    // ---------- Locomotive Scroll + GSAP ScrollTrigger integration ----------
-    window.addEventListener('DOMContentLoaded', ()=>{
-      gsap.registerPlugin(ScrollTrigger);
+    // Smooth scroll for anchor-like buttons
+    document.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-scroll-to]');
+      if (!target) return;
+      e.preventDefault();
+      const selector = target.getAttribute('data-scroll-to');
+      const el = document.querySelector(selector);
+      if (!el) return;
+      // native smooth scroll
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 
-      const locoScroll = new LocomotiveScroll({
-        el: document.querySelector('#js-scroll'),
-        smooth: true,
-        multiplier: 1,
-        class: 'is-revealed',
-      });
-
-      // each time Locomotive updates, tell ScrollTrigger to update too (sync scrollers)
-      locoScroll.on('scroll', ScrollTrigger.update);
-
-      // tell ScrollTrigger to use these proxy methods for the '#js-scroll' element
-      ScrollTrigger.scrollerProxy('#js-scroll', {
-        scrollTop(value) {
-          return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
-        },
-        getBoundingClientRect() {
-          return {top:0,left:0,width:window.innerWidth,height:window.innerHeight};
-        },
-        // we don't support horizontal scrolling in this demo
-        fixedMarkers: true
-      });
-
-      // refresh ScrollTrigger after loco updates/loads
-      ScrollTrigger.addEventListener('refresh', () => locoScroll.update());
-      ScrollTrigger.refresh();
-
-      // ---------- Entry animations (staggered) ----------
-      const fadeEls = qa('.will-fade');
-      gsap.fromTo(fadeEls, {y: 18, autoAlpha:0}, {
-        y:0, autoAlpha:1, duration:0.9, ease:'power3.out', stagger:0.12,
-        scrollTrigger:{trigger:'.will-fade', scroller:'#js-scroll', start:'top 85%'}
-      });
-
-      const slideLeftEls = qa('.will-slide-left');
-      gsap.fromTo(slideLeftEls, {x:-22, autoAlpha:0}, {x:0,autoAlpha:1,duration:0.9,ease:'power3.out',stagger:0.12, scrollTrigger:{scroller:'#js-scroll', start:'top 90%'}});
-      const slideRightEls = qa('.will-slide-right');
-      gsap.fromTo(slideRightEls, {x:22, autoAlpha:0}, {x:0,autoAlpha:1,duration:0.9,ease:'power3.out',stagger:0.12, scrollTrigger:{scroller:'#js-scroll', start:'top 90%'}});
-
-      // ---------- Animate progress bars when skills section enters ----------
-      qa('.skill').forEach(el => {
-        const progress = el.querySelector('.progress');
-        const val = Number(el.getAttribute('data-skill')) || 80;
-        ScrollTrigger.create({
-          trigger: el, scroller:'#js-scroll', start:'top 80%', onEnter: () => {
-            gsap.to(progress, {scaleX: val/100, duration:1.1, ease:'power3.out'});
-          }
-        });
-      });
-
-      // ---------- Cards tilt + hover micro-interaction ----------
-      qa('.card').forEach(card => {
-        card.addEventListener('mousemove', (e)=>{
-          const rect = card.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width;
-          const y = (e.clientY - rect.top) / rect.height;
-          const rx = (y - 0.5) * 6; // rotation x
-          const ry = (x - 0.5) * -10; // rotation y
-          card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
-        });
-        card.addEventListener('mouseleave', ()=>{
-          card.style.transform = 'translateY(0)';
-        });
-
-        // simple pop on click
-        card.addEventListener('click', ()=>{
-          gsap.fromTo(card, {scale:0.98}, {scale:1.02, duration:0.2, yoyo:true, repeat:1});
-        });
-      });
-
-      // ---------- Typewriter: lightweight, GSAP-powered ----------
-      (function typeWriter(){
+    // GSAP: simple entrance animations for reveals
+    document.addEventListener('DOMContentLoaded', () => {
+      // typewriter effect using GSAP timeline
+      (function typewriter() {
         const el = document.getElementById('typewriter');
-        const phrases = ['a web developer.','a creative coder.','I ship performant front-ends.'];
-        let p = 0;
-        let tl = gsap.timeline({repeat:-1, repeatDelay:1.2});
-        phrases.forEach(txt => {
-          tl.to({}, {duration:0.4});
-          tl.call(()=>{el.textContent='';});
-          // add characters
-          for(let i=0;i<txt.length;i++){
-            tl.to({}, {duration:0.05, onComplete:()=> el.textContent += txt[i]});
+        if (!el) return;
+        const phrases = ['a web developer.', 'a creative coder.', 'I ship performant front-ends.'];
+        const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.2 });
+        phrases.forEach(text => {
+          tl.call(() => el.textContent = '');
+          for (let i = 0; i < text.length; i++) {
+            tl.to({}, { duration: 0.04, onComplete: () => el.textContent += text[i] });
           }
-          tl.to({}, {duration:1.5});
-          // delete
-          for(let i=0;i<txt.length;i++){
-            tl.to({}, {duration:0.03, onComplete:()=> el.textContent = el.textContent.slice(0,-1)});
+          tl.to({}, { duration: 1.2 });
+          for (let i = 0; i < text.length; i++) {
+            tl.to({}, { duration: 0.02, onComplete: () => el.textContent = el.textContent.slice(0, -1) });
           }
         });
       })();
 
-      // ---------- Magic: update links to use locomotive scrollTo for in-page nav ----------
-      qa('[data-link-to]').forEach(btn => btn.addEventListener('click', (e)=>{
-        const target = btn.getAttribute('data-link-to');
-        locoScroll.scrollTo(target);
-      }));
+      // fade/slide in reveals when element enters the viewport
+      const reveals = $$('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            gsap.to(el, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.04 });
+            io.unobserve(el);
+          }
+        });
+      }, { threshold: 0.14 });
 
-      // also nav anchors
-      qa('[data-link]').forEach(a => a.addEventListener('click', (ev)=>{
-        ev.preventDefault();
-        const href = a.getAttribute('href');
-        locoScroll.scrollTo(href);
-      }));
+      // initialize reveal elements: set start state
+      reveals.forEach(el => {
+        gsap.set(el, { autoAlpha: 0, y: 12 });
+        io.observe(el);
+      });
 
-      // refresh on resize
-      window.addEventListener('resize', ()=> locoScroll.update());
+      // progress bars when skills visible
+      const skills = $$('.skill');
+      skills.forEach(skill => {
+        const pWrap = skill.querySelector('.progress');
+        const target = Number(skill.getAttribute('data-skill') || 80);
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              gsap.to(pWrap, { width: `${target}%`, duration: 1.1, ease: 'power3.out' });
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.3 });
+        observer.observe(skill);
+      });
 
-    });
+      // subtle 3D tilt on non-touch devices for project cards
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      if (!isTouch) {
+        $$('.project').forEach(card => {
+          card.addEventListener('mousemove', (e) => {
+            const r = card.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width;
+            const py = (e.clientY - r.top) / r.height;
+            const rx = (py - 0.5) * 6; // rotateX
+            const ry = (px - 0.5) * -8; // rotateY
+            card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+          });
+          card.addEventListener('mouseleave', () => {
+            gsap.to(card, { rotateX: 0, rotateY: 0, x: 0, y: 0, duration: 0.35, ease: 'power1.out', onComplete: () => card.style.transform = '' });
+          });
+        });
+      } // end non-touch tilt
 
-    // ---------- Accessibility: reduce motion preference ----------
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-      qa('.progress').forEach(p=> p.style.transition = 'none');
+    }); // DOMContentLoaded end
+
+    // Accessibility: reduce motion respect
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mq.matches) {
+      // remove GSAP heavy timelines if user prefers reduced motion
+      // (Note: GSAP timelines above are short; this is a minimal fallback)
+      $$('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+      $$('.progress').forEach(p => p.style.transition = 'none');
     }
-
-  </script></body>
+  </script>
+</body>
 </html>
