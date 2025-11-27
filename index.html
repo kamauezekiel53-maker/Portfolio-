@@ -236,9 +236,11 @@
             z-index: 1;
         }
 
-        .profile-image i {
-            font-size: 100px;
-            color: var(--primary);
+        .profile-image img {
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            object-fit: cover;
             z-index: 2;
             position: relative;
         }
@@ -402,11 +404,10 @@
             overflow: hidden;
         }
 
-        .project-image i {
-            font-size: 50px;
-            color: white;
-            z-index: 2;
-            position: relative;
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .project-info {
@@ -645,6 +646,76 @@
             transform: translateY(0);
         }
 
+        /* New Features */
+        /* Theme Toggle */
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--secondary);
+        }
+
+        /* Project Filter */
+        .project-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+
         /* Responsive */
         @media (max-width: 992px) {
             .hero-content, .about-content, .contact-content {
@@ -688,6 +759,11 @@
                 left: 10px;
                 border-radius: 15px;
             }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
         }
     </style>
 </head>
@@ -706,8 +782,13 @@
                 <a href="#projects">Projects</a>
                 <a href="#contact">Contact</a>
             </nav>
-            <div class="hamburger">
-                <i class="fas fa-bars"></i>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
             </div>
         </div>
     </header>
@@ -717,6 +798,7 @@
         <div class="hero-content">
             <div class="hero-text">
                 <h1>Hi, I'm <span class="gradient-text">Ezekiel Kamau</span><br>Web Developer</h1>
+                <div id="typewriter" class="hero-sub">a web developer.</div>
                 <p>I create beautiful, functional websites with modern technologies and attention to detail. Based in Nairobi, Kenya.</p>
                 <div class="cta-buttons">
                     <a href="#projects" class="btn btn-primary"><i class="fas fa-code"></i> View My Work</a>
@@ -726,7 +808,7 @@
             <div class="hero-image">
                 <div class="profile-container">
                     <div class="profile-image">
-                        <i class="fas fa-code"></i>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ezekiel" alt="Ezekiel Kamau">
                         <div class="floating-elements">
                             <div class="float"></div>
                             <div class="float"></div>
@@ -775,6 +857,26 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Stats Section -->
+            <div class="stats">
+                <div class="stat-card fade-in">
+                    <div class="stat-number">14+</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">4+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">12+</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Awards Won</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -784,43 +886,72 @@
             <div class="section-title">
                 <h2>My Projects</h2>
             </div>
+            
+            <!-- Project Filters -->
+            <div class="project-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web Apps</button>
+                <button class="filter-btn" data-filter="ui">UI Experiments</button>
+                <button class="filter-btn" data-filter="mobile">Mobile</button>
+            </div>
+            
             <div class="projects-grid">
-                <div class="project-card fade-in">
+                <!-- Project 1 - Pretty Messages -->
+                <div class="project-card fade-in" data-category="web ui">
                     <div class="project-image">
-                        <i class="fas fa-shopping-cart"></i>
+                        <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pretty Messages App">
                     </div>
                     <div class="project-info">
-                        <h3>E-Commerce Platform</h3>
-                        <p>Full-featured online store with payment integration and admin dashboard.</p>
+                        <h3>Pretty Messages App</h3>
+                        <p>A clean message generator with animations and intuitive UI.</p>
                         <div class="project-links">
-                            <a href="#" class="btn btn-outline">View Project</a>
-                            <a href="#" class="btn btn-primary">Source Code</a>
+                            <a href="https://pretty-messages-project-2.vercel.app/" target="_blank" class="btn btn-outline">View Project</a>
+                            <a href="https://github.com/kamauezekiel53-maker" target="_blank" class="btn btn-primary">Source Code</a>
                         </div>
                     </div>
                 </div>
-                <div class="project-card fade-in">
+                
+                <!-- Project 2 - Movie App -->
+                <div class="project-card fade-in" data-category="web">
                     <div class="project-image">
-                        <i class="fas fa-music"></i>
+                        <img src="https://images.unsplash.com/photo-1489599804159-4e6bf5f4c8e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Movie Discovery App">
                     </div>
                     <div class="project-info">
-                        <h3>Music Streaming App</h3>
-                        <p>React-based music player with playlist creation and social features.</p>
+                        <h3>Movie Discovery App</h3>
+                        <p>A streaming-style discovery app with search and trailers.</p>
                         <div class="project-links">
-                            <a href="#" class="btn btn-outline">View Project</a>
-                            <a href="#" class="btn btn-primary">Source Code</a>
+                            <a href="https://movie-app-phi-nine-89.vercel.app/" target="_blank" class="btn btn-outline">View Project</a>
+                            <a href="https://github.com/kamauezekiel53-maker" target="_blank" class="btn btn-primary">Source Code</a>
                         </div>
                     </div>
                 </div>
-                <div class="project-card fade-in">
+                
+                <!-- Project 3 - Silver Octo Computing -->
+                <div class="project-card fade-in" data-category="ui">
                     <div class="project-image">
-                        <i class="fas fa-chart-line"></i>
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Silver Octo Computing">
                     </div>
                     <div class="project-info">
-                        <h3>Analytics Dashboard</h3>
-                        <p>Data visualization platform with real-time metrics and reporting.</p>
+                        <h3>Silver Octo Computing</h3>
+                        <p>An experimental UI project with creative layouts and motion.</p>
                         <div class="project-links">
-                            <a href="#" class="btn btn-outline">View Project</a>
-                            <a href="#" class="btn btn-primary">Source Code</a>
+                            <a href="https://silver-octo-computing-machine-blush.vercel.app/" target="_blank" class="btn btn-outline">View Project</a>
+                            <a href="https://github.com/kamauezekiel53-maker" target="_blank" class="btn btn-primary">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 - Kenya Crafts Store -->
+                <div class="project-card fade-in" data-category="web mobile">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Kenya Crafts Store">
+                    </div>
+                    <div class="project-info">
+                        <h3>Kenya Crafts Store</h3>
+                        <p>An e-commerce platform showcasing Kenyan handmade products.</p>
+                        <div class="project-links">
+                            <a href="#" target="_blank" class="btn btn-outline">View Project</a>
+                            <a href="https://github.com/kamauezekiel53-maker" target="_blank" class="btn btn-primary">Source Code</a>
                         </div>
                     </div>
                 </div>
@@ -835,15 +966,15 @@
                 <h2>Get In Touch</h2>
             </div>
             <div class="contact-content">
-                <form class="contact-form fade-in">
+                <form class="contact-form fade-in" id="contactForm">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your Name" required>
+                        <input type="text" class="form-control" placeholder="Your Name" required id="name">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Your Email" required>
+                        <input type="email" class="form-control" placeholder="Your Email" required id="email">
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" placeholder="Your Message" required></textarea>
+                        <textarea class="form-control" placeholder="Your Message" required id="message"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>
@@ -875,6 +1006,15 @@
                             <p>+254 752 578 163</p>
                         </div>
                     </div>
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <h3>WhatsApp</h3>
+                            <p>+254 752 578 163</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -886,10 +1026,10 @@
             <div class="footer-content">
                 <div class="logo">Ezekiel Kamau</div>
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-github"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://github.com/kamauezekiel53-maker" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/ezekiel-kamau" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://twitter.com/ezekiel_kamau" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/_ph_antom_knight/" target="_blank"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             <div class="copyright">
@@ -917,7 +1057,7 @@
 
     <!-- Audio Elements -->
     <audio id="audioPlayer" preload="metadata">
-        <source src="https://audio.jukehost.co.uk/6pZ6lCk1V5q9uQ8b9u4m3z6w8q9l5v2" type="audio/mpeg">
+        <!-- We'll dynamically set the source -->
     </audio>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -1090,6 +1230,122 @@
         // Initialize with first track
         loadTrack(currentTrackIndex);
 
+        // Project Filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const filterValue = button.getAttribute('data-filter');
+                
+                projectCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category').includes(filterValue)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Check for saved theme or prefer color scheme
+        const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
+        
+        if (currentTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('light-theme');
+            
+            let theme = 'dark';
+            if (document.body.classList.contains('light-theme')) {
+                theme = 'light';
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+            
+            localStorage.setItem('theme', theme);
+        });
+
+        // Typewriter Effect
+        function typeWriter() {
+            const element = document.getElementById('typewriter');
+            const phrases = [
+                'a web developer.',
+                'a creative coder.',
+                'a problem solver.',
+                'from Nairobi, Kenya.'
+            ];
+            let phraseIndex = 0;
+            let letterIndex = 0;
+            let currentPhrase = '';
+            let isDeleting = false;
+            let isEnd = false;
+            
+            function type() {
+                isEnd = false;
+                currentPhrase = phrases[phraseIndex];
+                
+                if (isDeleting) {
+                    element.textContent = currentPhrase.substring(0, letterIndex - 1);
+                    letterIndex--;
+                } else {
+                    element.textContent = currentPhrase.substring(0, letterIndex + 1);
+                    letterIndex++;
+                }
+                
+                if (!isDeleting && letterIndex === currentPhrase.length) {
+                    isEnd = true;
+                    isDeleting = true;
+                    setTimeout(type, 1500);
+                } else if (isDeleting && letterIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex++;
+                    if (phraseIndex >= phrases.length) {
+                        phraseIndex = 0;
+                    }
+                    setTimeout(type, 500);
+                } else {
+                    const typeSpeed = isDeleting ? 50 : 100;
+                    setTimeout(type, typeSpeed);
+                }
+            }
+            
+            type();
+        }
+
+        // Form Submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if (name && email && message) {
+                // In a real application, you would send this data to a server
+                alert('Thank you for your message, ' + name + '! I will get back to you soon.');
+                contactForm.reset();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
         // GSAP Animations
         document.addEventListener('DOMContentLoaded', function() {
             gsap.registerPlugin(ScrollTrigger);
@@ -1139,6 +1395,9 @@
                     ease: 'power3.out'
                 });
             });
+            
+            // Start typewriter effect
+            typeWriter();
         });
     </script>
 </body>
