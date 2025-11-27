@@ -11,8 +11,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <style>
     :root{
@@ -30,7 +30,7 @@
     /* RESET / BASE */
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:#fff; -webkit-font-smoothing:antialiased}
-    body { background: linear-gradient(180deg,var(--bg1),var(--bg2)); overflow-y:auto; -webkit-overflow-scrolling:touch; scroll-behavior:smooth; }
+    body { background: linear-gradient(180deg,var(--bg1),var(--bg2)); overflow-y:auto; -webkit-overflow-scrolling:touch; scroll-behavior: smooth; }
 
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block;height:auto}
@@ -89,7 +89,8 @@
     .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));padding:18px;border-radius:var(--card-radius);border:1px solid rgba(255,255,255,0.03);transition:var(--transition);box-shadow:0 10px 25px rgba(0,0,0,0.1)}
     .card:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,0.2)}
     .profile{display:flex;gap:12px;align-items:center}
-    .avatar{width:88px;height:88px;border-radius:12px;display:grid;place-items:center;font-weight:800;color:var(--accent-a);background:linear-gradient(135deg, rgba(79,70,229,0.12), rgba(6,214,160,0.06));border:1px solid rgba(255,255,255,0.03)}
+    .avatar{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--accent-a);background:linear-gradient(135deg, rgba(79,70,229,0.12), rgba(6,214,160,0.06));border:1px solid rgba(255,255,255,0.03);overflow:hidden}
+    .avatar img{width:100%;height:100%;object-fit:cover}
     .stats{display:flex;gap:10px;margin-top:12px}
     .stat{flex:1;background:rgba(255,255,255,0.02);padding:10px;border-radius:10px;text-align:center;transition:var(--transition)}
     .stat:hover{background:rgba(255,255,255,0.04);transform:translateY(-3px)}
@@ -119,6 +120,7 @@
     .project-card:hover::before{transform:scaleX(1)}
     .project-card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,0.3)}
     .thumb{height:140px;border-radius:10px;background:linear-gradient(135deg, rgba(79,70,229,0.12), rgba(6,214,160,0.06));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent-a);margin-bottom:10px;position:relative;overflow:hidden}
+    .thumb img{width:100%;height:100%;object-fit:cover}
     .thumb::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg, rgba(79,70,229,0.1), rgba(6,214,160,0.05));opacity:0;transition:opacity 0.3s ease}
     .project-card:hover .thumb::after{opacity:1}
     .project-links{display:flex;gap:8px;margin-top:8px}
@@ -140,6 +142,19 @@
     .scroll-top.visible{opacity:1;visibility:visible}
     .scroll-top:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(79,70,229,0.3)}
 
+    /* music player */
+    .music-player{position:fixed;bottom:20px;left:20px;z-index:999;display:flex;align-items:center;gap:10px;background:rgba(10,15,30,0.7);border-radius:50px;padding:8px 15px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.05);box-shadow:0 5px 15px rgba(0,0,0,0.2)}
+    .music-controls{display:flex;align-items:center;gap:8px}
+    .music-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.05);border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+    .music-btn:hover{background:rgba(255,255,255,0.1);color:#fff}
+    .music-info{display:flex;flex-direction:column;max-width:150px}
+    .music-title{font-size:12px;font-weight:600;color:#fff}
+    .music-artist{font-size:10px;color:var(--muted)}
+    .volume-control{display:flex;align-items:center;gap:5px}
+    .volume-slider{width:70px;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;outline:none;opacity:0.7;transition:opacity 0.3s}
+    .volume-slider:hover{opacity:1}
+    .volume-slider::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--accent-a);cursor:pointer}
+
     /* utilities */
     .hidden{display:none}
     .reveal{opacity:0;transform:translateY(12px)}
@@ -155,6 +170,15 @@
     .testimonial-name{font-weight:700;font-size:14px}
     .testimonial-role{font-size:12px;color:var(--muted)}
 
+    /* dashboard section */
+    .dashboard {padding: 40px 0;}
+    .dashboard-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;}
+    .dashboard-card {background: linear-gradient(135deg, rgba(79,70,229,0.1), rgba(6,214,160,0.05)); border-radius: var(--card-radius); padding: 25px; text-align: center; border: 1px solid rgba(255,255,255,0.05); transition: var(--transition);}
+    .dashboard-card:hover {transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.2);}
+    .dashboard-icon {font-size: 2.5rem; margin-bottom: 15px; color: var(--accent-a);}
+    .dashboard-number {font-size: 2rem; font-weight: 800; margin-bottom: 10px; background: linear-gradient(90deg, var(--accent-a), var(--accent-b)); -webkit-background-clip: text; background-clip: text; color: transparent;}
+    .dashboard-label {color: var(--muted); font-size: 0.9rem;}
+
     /* responsive adjustments */
     @media (max-width:920px){
       .hero-inner{grid-template-columns:1fr;gap:18px}
@@ -165,10 +189,13 @@
       .nav-links{display:none}
       .hamburger{display:flex}
       .mobile-menu{display:block}
+      .music-player{left:50%;transform:translateX(-50%);bottom:70px;width:90%}
+      .music-info{display:none}
     }
     @media (max-width:440px){
       .thumb{height:110px}
       .testimonials-grid{grid-template-columns:1fr}
+      .dashboard-grid{grid-template-columns:1fr}
     }
 
     /* DARK MODE variant: toggled by body.dark */
@@ -196,6 +223,7 @@
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
+        <a href="#dashboard">Dashboard</a>
         <a href="#testimonials">Testimonials</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -212,10 +240,27 @@
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
+      <a href="#dashboard">Dashboard</a>
       <a href="#testimonials">Testimonials</a>
       <a href="#contact">Contact</a>
     </div>
   </header>
+
+  <!-- Music Player -->
+  <div class="music-player">
+    <div class="music-controls">
+      <button id="playPauseBtn" class="music-btn"><i class="fas fa-play"></i></button>
+      <button id="nextTrackBtn" class="music-btn"><i class="fas fa-forward"></i></button>
+    </div>
+    <div class="music-info">
+      <div class="music-title" id="currentTrack">Ambient Coding</div>
+      <div class="music-artist" id="currentArtist">Focus Music</div>
+    </div>
+    <div class="volume-control">
+      <i class="fas fa-volume-up" style="color:var(--muted); font-size:12px"></i>
+      <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+    </div>
+  </div>
 
   <!-- Scroll to top button -->
   <button id="scrollTop" class="scroll-top" aria-label="Scroll to top"><i class="fas fa-chevron-up"></i></button>
@@ -239,7 +284,9 @@
 
         <aside class="card reveal" aria-hidden="false">
           <div class="profile">
-            <div class="avatar" aria-hidden="true">EK</div>
+            <div class="avatar" aria-hidden="true">
+              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Ezekiel" alt="Cartoon avatar of Ezekiel Kamau">
+            </div>
             <div>
               <div style="font-weight:700">Ezekiel Kamau</div>
               <div style="font-size:13px;color:var(--muted);margin-top:6px">Web Developer — Nairobi, Kenya</div>
@@ -324,7 +371,9 @@
         <div class="projects-grid">
           <!-- Project 1 -->
           <article class="project-card reveal" data-category="ui web">
-            <div class="thumb">Pretty Messages</div>
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pretty Messages App">
+            </div>
             <h3 style="margin:6px 0 6px">Pretty Messages App</h3>
             <p style="margin:0;color:var(--muted)">A clean message generator with animations and intuitive UI.</p>
             <div class="project-links" style="margin-top:8px">
@@ -335,7 +384,9 @@
 
           <!-- Project 2 -->
           <article class="project-card reveal" data-category="web">
-            <div class="thumb">Movie App</div>
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1489599804159-4e6bf5f4c8e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Movie Discovery App">
+            </div>
             <h3 style="margin:6px 0 6px">Movie Discovery App</h3>
             <p style="margin:0;color:var(--muted)">A streaming-style discovery app with search and trailers.</p>
             <div class="project-links" style="margin-top:8px">
@@ -346,7 +397,9 @@
 
           <!-- Project 3 -->
           <article class="project-card reveal" data-category="ui">
-            <div class="thumb">Octo UI</div>
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Silver Octo Computing">
+            </div>
             <h3 style="margin:6px 0 6px">Silver Octo Computing</h3>
             <p style="margin:0;color:var(--muted)">An experimental UI project with creative layouts and motion.</p>
             <div class="project-links" style="margin-top:8px">
@@ -357,7 +410,9 @@
 
           <!-- Project 4 -->
           <article class="project-card reveal" data-category="web mobile">
-            <div class="thumb">E-commerce Platform</div>
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Kenya Crafts Store">
+            </div>
             <h3 style="margin:6px 0 6px">Kenya Crafts Store</h3>
             <p style="margin:0;color:var(--muted)">An e-commerce platform showcasing Kenyan handmade products.</p>
             <div class="project-links" style="margin-top:8px">
@@ -366,6 +421,35 @@
             </div>
           </article>
 
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="dashboard">
+      <div class="container">
+        <h2 class="section-title reveal">My Dashboard</h2>
+        <div class="dashboard-grid">
+          <div class="dashboard-card reveal">
+            <div class="dashboard-icon"><i class="fas fa-code"></i></div>
+            <div class="dashboard-number">14+</div>
+            <div class="dashboard-label">Projects Completed</div>
+          </div>
+          <div class="dashboard-card reveal">
+            <div class="dashboard-icon"><i class="fas fa-users"></i></div>
+            <div class="dashboard-number">12+</div>
+            <div class="dashboard-label">Happy Clients</div>
+          </div>
+          <div class="dashboard-card reveal">
+            <div class="dashboard-icon"><i class="fas fa-clock"></i></div>
+            <div class="dashboard-number">4+</div>
+            <div class="dashboard-label">Years Experience</div>
+          </div>
+          <div class="dashboard-card reveal">
+            <div class="dashboard-icon"><i class="fas fa-coffee"></i></div>
+            <div class="dashboard-number">∞</div>
+            <div class="dashboard-label">Cups of Coffee</div>
+          </div>
         </div>
       </div>
     </section>
@@ -461,6 +545,12 @@
     </footer>
   </main>
 
+  <!-- Audio element for background music -->
+  <audio id="backgroundMusic" loop>
+    <source src="https://assets.codepen.io/1468070/ambient-music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
   <script>
     // Utilities
     const $ = s => document.querySelector(s);
@@ -474,10 +564,10 @@
       document.body.classList.toggle('light');
       const isLight = document.body.classList.contains('light');
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
-      themeToggle.innerHTML = isLight ? '<i class=\"fas fa-sun\"></i>' : '<i class=\"fas fa-moon\"></i>';
+      themeToggle.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     });
     // set initial icon
-    themeToggle.innerHTML = document.body.classList.contains('light') ? '<i class=\"fas fa-sun\"></i>' : '<i class=\"fas fa-moon\"></i>';
+    themeToggle.innerHTML = document.body.classList.contains('light') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
 
     // Mobile menu
     const hamburger = $('#hamburger');
@@ -505,6 +595,39 @@
     });
     scrollTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Music Player
+    const audio = $('#backgroundMusic');
+    const playPauseBtn = $('#playPauseBtn');
+    const volumeSlider = $('#volumeSlider');
+    const currentTrack = $('#currentTrack');
+    const currentArtist = $('#currentArtist');
+    
+    let isPlaying = false;
+    
+    // Play/Pause functionality
+    playPauseBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        audio.pause();
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+      } else {
+        audio.play().catch(e => console.log('Audio play failed:', e));
+        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+      }
+      isPlaying = !isPlaying;
+    });
+    
+    // Volume control
+    volumeSlider.addEventListener('input', () => {
+      audio.volume = volumeSlider.value / 100;
+    });
+    
+    // Next track (placeholder functionality)
+    $('#nextTrackBtn').addEventListener('click', () => {
+      // In a real implementation, this would cycle through a playlist
+      currentTrack.textContent = "Coding Focus";
+      currentArtist.textContent = "Ambient Sounds";
     });
 
     // GSAP & Scroll reveals
